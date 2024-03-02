@@ -16,6 +16,21 @@ public class DrawEntryRepository
         _connectionString = Utilities.GetConnectionString();
     }
 
+    /*checks in db if serial number has been already used twice in the draw*/
+    public bool IsSerialNumberLimitExceeded(string serialNumber)
+    {
+        var sql = @"SELECT COUNT(*) FROM dbo.DrawEntries WHERE serial_number=@serialNumber";
+        using (var conn = new SqlConnection(_connectionString))
+        {
+            int count = conn.QuerySingle<int>(sql, new { serialNumber });
+            return count >= 2;
+        }
+    }
+
+ 
+    
+    
+
     public DrawEntry CreateEntry(string firstName, string lastName, string emailAddress, string serialNumber)
     {
         var sql = $@"
@@ -28,7 +43,6 @@ public class DrawEntryRepository
         using (var conn = new SqlConnection(_connectionString))
 
         {
-            Console.WriteLine("here: " + _connectionString);
 
             return conn.QueryFirst<DrawEntry>(sql, new
             {

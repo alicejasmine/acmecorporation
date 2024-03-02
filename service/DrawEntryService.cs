@@ -13,13 +13,15 @@ public class DrawEntryService
         _drawEntryRepository = drawEntryRepository;
     }
 
+    
+   
 
-
-    public DrawEntry CreateEntry(string firstName, string lastName, string emailAddress,string serialNumber)
+    public DrawEntry CreateEntry(string firstName, string lastName, string emailAddress, string serialNumber)
     {
         try
         {
-            return _drawEntryRepository.CreateEntry(firstName, lastName, emailAddress,serialNumber);
+            ValidateSerialNumberLimit(serialNumber);
+            return _drawEntryRepository.CreateEntry(firstName, lastName, emailAddress, serialNumber);
         }
         catch (ValidationException e)
         {
@@ -34,4 +36,15 @@ public class DrawEntryService
             throw new Exception("Could not create entry");
         }
     }
+
+
+    private void ValidateSerialNumberLimit(string serialNumber)
+    {
+        if (_drawEntryRepository.IsSerialNumberLimitExceeded(serialNumber))
+        {
+            throw new ValidationException($"Maximum number of entries for serial number {serialNumber} reached");
+        }
+    }
+    
+    
 }
