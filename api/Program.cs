@@ -1,10 +1,12 @@
-
 using infrastructure;
+using Microsoft.Data.SqlClient;
 using service;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+
 builder.Services.AddSingleton<DrawEntryRepository>();
 builder.Services.AddSingleton<DrawEntryService>();
 builder.Services.AddControllers();
@@ -33,5 +35,6 @@ app.UseCors(options =>
         .AllowAnyHeader()
 );
 app.MapControllers();
+
 
 app.Run();
