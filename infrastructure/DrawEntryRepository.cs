@@ -27,9 +27,16 @@ public class DrawEntryRepository
         }
     }
 
- 
-    
-    
+/*checks if serial number is valid*/
+    public bool IsSerialNumberValid(string serialNumber)
+    {
+        var sql = @"SELECT COUNT(*) FROM dbo.ProductSerialNumbers WHERE serial_number=@serialNumber";
+        using (var conn = new SqlConnection(_connectionString))
+        {
+            int count = conn.QuerySingle<int>(sql, new { serialNumber });
+            return count >= 1;
+        }
+    }
 
     public DrawEntry CreateEntry(string firstName, string lastName, string emailAddress, string serialNumber)
     {
@@ -43,7 +50,6 @@ public class DrawEntryRepository
         using (var conn = new SqlConnection(_connectionString))
 
         {
-
             return conn.QueryFirst<DrawEntry>(sql, new
             {
                 firstName,
