@@ -14,13 +14,12 @@ public class DrawEntryService
     }
 
 
-    public DrawEntry CreateEntry()
+
+    public DrawEntry CreateEntry(string firstName, string lastName, string emailAddress,string serialNumber)
     {
         try
         {
-            //if (_drawEntryRepository.IsFullNameTakenInCreate(fullname))
-              //  throw new ValidationException("player name is taken");
-            return _drawEntryRepository.CreateEntry();
+            return _drawEntryRepository.CreateEntry(firstName, lastName, emailAddress,serialNumber);
         }
         catch (ValidationException e)
         {

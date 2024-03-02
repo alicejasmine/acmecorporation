@@ -26,7 +26,7 @@ public class DrawEntryController : ControllerBase
     public DrawEntry Post([FromBody] CreateDrawEntryRequestDto dto)
     {
         HttpContext.Response.StatusCode = StatusCodes.Status201Created;
-        return _drawEntryService.CreateEntry();
+        return _drawEntryService.CreateEntry(dto.FirstName, dto.LastName, dto.EmailAddress, dto.SerialNumber);
     }
 
 
