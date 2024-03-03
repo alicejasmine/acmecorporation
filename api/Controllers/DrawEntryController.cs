@@ -6,9 +6,7 @@ using service;
 
 namespace api.Controllers;
 
-
 [ApiController]
-
 public class DrawEntryController : ControllerBase
 {
     private readonly DrawEntryService _drawEntryService;
@@ -29,8 +27,11 @@ public class DrawEntryController : ControllerBase
         return _drawEntryService.CreateEntry(dto.FirstName, dto.LastName, dto.EmailAddress, dto.SerialNumber);
     }
 
-
+    //get all submitted entries with pagination to show 10 entries per page
+    [HttpGet]
+    [ValidateModel]
+    [Route("api/entries")] 
+    public IEnumerable<DrawEntry> GetAllEntries([FromQuery] int page = 1, [FromQuery] int resultsPerPage = 10 ){
+        return _drawEntryService.GetAllEntries(page, resultsPerPage);
+    }
 }
-
-
-

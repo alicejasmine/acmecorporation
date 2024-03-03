@@ -59,4 +59,22 @@ public class DrawEntryRepository
             });
         }
     }
+
+    public IEnumerable<DrawEntry> GetAllEntries(int page, int resultsPerPage)
+    {
+        string sql = $@"
+SELECT entry_ID as {nameof(DrawEntry.Id)},
+    first_name as {nameof(DrawEntry.FirstName)},
+    last_name as {nameof(DrawEntry.LastName)},
+    email_address as {nameof(DrawEntry.EmailAddress)},
+    serial_number as {nameof(DrawEntry.SerialNumber)}
+FROM dbo.DrawEntries
+ORDER BY entry_ID
+OFFSET @offset ROWS FETCH NEXT @limit ROWS ONLY;
+";
+        using (var conn = new SqlConnection(_connectionString))
+        {
+            return conn.Query<DrawEntry>(sql, new { offset = (page - 1) * resultsPerPage, limit = resultsPerPage });
+        }
+    }
 }

@@ -52,4 +52,9 @@ public class DrawEntryService
             throw new ValidationException($"Serial number: {serialNumber} is not valid");
         }
     }
+
+    public IEnumerable<DrawEntry> GetAllEntries(int page, int resultsPerPage)
+    {
+        return _drawEntryRepository.GetAllEntries(page, resultsPerPage);
+    }
 }
