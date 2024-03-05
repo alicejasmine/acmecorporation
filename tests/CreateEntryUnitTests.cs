@@ -11,7 +11,7 @@ namespace tests;
 public class CreateEntryUnitTests
 {
     [TestCase("Andrea", "Clay", "andreac@gmail.com", "XHMXCLGXBFSUU959WLLW", true)]
-    public async Task EntryCanSuccessfullyBeCreatedFromHttpRequest(string fullname, string lastname,
+    public async Task EntryCanSuccessfullyBeCreatedFromHttpRequest(string firstname, string lastname,
         string emailAddress, string serialNumber, bool isAgeConfirmed)
     {
         //ARRANGE
@@ -19,7 +19,7 @@ public class CreateEntryUnitTests
 
         var testEntry = new CreateDrawEntryRequestDto
         {
-            FirstName = fullname, LastName = lastname, EmailAddress = emailAddress, SerialNumber = serialNumber,
+            FirstName = firstname, LastName = lastname, EmailAddress = emailAddress, SerialNumber = serialNumber,
             IsOver18Confirmed = isAgeConfirmed
         };
 
@@ -38,14 +38,16 @@ public class CreateEntryUnitTests
                 .BeEquivalentTo(entryFromResponseBody);
         }
     }
-    
-    
-    [TestCase("Firstname that is long and exceeds the set character limit", "Clay", "andreac@gmail.com", "XHMXCLGXBFSUU959WLLW", true)] //firstname exceeds character limit
-    [TestCase("Andrea", "Lastname that is long and exceeds the set character limit", "andreac@gmail.com", "XHMXCLGXBFSUU959WLLW", true)] //lastname exceeds character limit
+
+
+    [TestCase("Firstname that is long and exceeds the set character limit", "Clay", "andreac@gmail.com",
+        "XHMXCLGXBFSUU959WLLW", true)] //firstname exceeds character limit
+    [TestCase("Andrea", "Lastname that is long and exceeds the set character limit", "andreac@gmail.com",
+        "XHMXCLGXBFSUU959WLLW", true)] //lastname exceeds character limit
     [TestCase("Andrea", "Clay", "andreac@gmail.com", "invalidSerialNumber", true)] //serial number invalid
     [TestCase("Andrea", "Clay", "notemailformat", "XHMXCLGXBFSUU959WLLW", true)] //Email format not valid
     [TestCase("Andrea", "Clay", "andreac@gmail.com", "XHMXCLGXBFSUU959WLLW", false)] //Age confirmation false
-    public async Task ServerSideDataValidationShouldRejectEntry(string fullname, string lastname,
+    public async Task ServerSideDataValidationShouldRejectEntry(string firstname, string lastname,
         string emailAddress, string serialNumber, bool isAgeConfirmed)
     {
         //ARRANGE
@@ -53,7 +55,7 @@ public class CreateEntryUnitTests
 
         var testEntry = new CreateDrawEntryRequestDto
         {
-            FirstName = fullname, LastName = lastname, EmailAddress = emailAddress, SerialNumber = serialNumber,
+            FirstName = firstname, LastName = lastname, EmailAddress = emailAddress, SerialNumber = serialNumber,
             IsOver18Confirmed = isAgeConfirmed
         };
 
@@ -62,7 +64,7 @@ public class CreateEntryUnitTests
         DrawEntry entryFromResponseBody =
             JsonConvert.DeserializeObject<DrawEntry>(await httpResponse.Content.ReadAsStringAsync());
 
-       
+
         // ASSERT
         httpResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
 
@@ -70,6 +72,49 @@ public class CreateEntryUnitTests
 
         {
             conn.ExecuteScalar<int>("SELECT COUNT(*) FROM  dbo.DrawEntries;").Should().Be(0);
+        }
+    }
+
+
+    [TestCase("Andrea", "Clay", "andreac@gmail.com", "XHMXCLGXBFSUU959WLLW", true)]
+    public async Task ServerSideDataValidationShouldRejectEntryLimit(string firstname, string lastname,
+        string emailAddress, string serialNumber, bool isAgeConfirmed)
+    {
+        //ARRANGE
+        Helper.TriggerRebuild();
+
+        var testEntry = new CreateDrawEntryRequestDto
+        {
+            FirstName = firstname, LastName = lastname, EmailAddress = emailAddress, SerialNumber = serialNumber,
+            IsOver18Confirmed = isAgeConfirmed
+        };
+
+        await using (var conn = new SqlConnection(Helper.GetConnectionString()))
+
+        {
+            var sql =
+                $"INSERT INTO dbo.DrawEntries(first_name, last_name, email_address, serial_number) VALUES (@{nameof(firstname)}, @{nameof(lastname)}, @{nameof(emailAddress)}, @{nameof(serialNumber)})";
+
+            //add two entries with same serial number
+            conn.Execute(sql, testEntry);
+            conn.Execute(sql, testEntry);
+        }
+
+
+        //ACT
+        var httpResponse = await new HttpClient().PostAsJsonAsync(Helper.ApiBaseUrl + "/entry", testEntry);
+        DrawEntry entryFromResponseBody =
+            JsonConvert.DeserializeObject<DrawEntry>(await httpResponse.Content.ReadAsStringAsync());
+
+
+        // ASSERT
+        httpResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+
+        await using (var conn = new SqlConnection(Helper.GetConnectionString()))
+
+        {
+            conn.ExecuteScalar<int>("SELECT COUNT(*) FROM  dbo.DrawEntries;").Should()
+                .Be(2); //3rd entry with same serial number is not inserted
         }
     }
 }
