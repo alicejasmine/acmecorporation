@@ -60,7 +60,7 @@ public class DrawEntryRepository
         }
     }
 
-    public IEnumerable<DrawEntry> GetAllEntries(int page, int resultsPerPage)
+    public IEnumerable<DrawEntry> GetEntries(int page, int resultsPerPage)
     {
         string sql = $@"
 SELECT entry_ID as {nameof(DrawEntry.Id)},
