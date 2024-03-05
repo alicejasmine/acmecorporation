@@ -11,4 +11,5 @@ public class CreateDrawEntryRequestDto
     [Required] [EmailAddress] public string EmailAddress { get; set; }
 
     [Required] [MaxLength(20)] public string SerialNumber { get; set; }
+    [Required] public bool IsOver18Confirmed { get; set; }
 }

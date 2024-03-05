@@ -24,14 +24,16 @@ public class DrawEntryController : ControllerBase
     public DrawEntry Post([FromBody] CreateDrawEntryRequestDto dto)
     {
         HttpContext.Response.StatusCode = StatusCodes.Status201Created;
-        return _drawEntryService.CreateEntry(dto.FirstName, dto.LastName, dto.EmailAddress, dto.SerialNumber);
+        return _drawEntryService.CreateEntry(dto.FirstName, dto.LastName, dto.EmailAddress, dto.SerialNumber,
+            dto.IsOver18Confirmed);
     }
 
     //get all submitted entries with pagination to show 10 entries per page
     [HttpGet]
     [ValidateModel]
-    [Route("api/entries")] 
-    public IEnumerable<DrawEntry> GetAllEntries([FromQuery] int page = 1, [FromQuery] int resultsPerPage = 10 ){
-        return _drawEntryService.GetAllEntries(page, resultsPerPage);
+    [Route("api/entries")]
+    public IEnumerable<DrawEntry> GetEntries([FromQuery] int page = 1, [FromQuery] int resultsPerPage = 10)
+    {
+        return _drawEntryService.GetEntries(page, resultsPerPage);
     }
 }
