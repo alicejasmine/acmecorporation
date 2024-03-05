@@ -1,0 +1,15 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace tests;
+
+public class CreateDrawEntryRequestDto
+{
+    [Required] [MaxLength(50)] public string FirstName { get; set; }
+
+    [Required] [MaxLength(50)] public string LastName { get; set; }
+
+    [Required] [EmailAddress] public string EmailAddress { get; set; }
+
+    [Required] [MaxLength(20)] public string SerialNumber { get; set; }
+    [Required] public bool IsOver18Confirmed { get; set; }
+}
