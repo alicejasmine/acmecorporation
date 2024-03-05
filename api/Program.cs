@@ -1,3 +1,4 @@
+using api;
 using infrastructure;
 using Microsoft.Data.SqlClient;
 using service;
@@ -36,5 +37,6 @@ app.UseCors(options =>
 );
 app.MapControllers();
 
+app.UseMiddleware<GlobalExceptionHandler>();
 
 app.Run();
