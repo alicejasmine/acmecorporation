@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { DrawLandingPageComponent } from './draw-landing-page/draw-landing-page.component';
 import { ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from "@angular/common/http";
+import { FormSubmissionsComponent } from './form-submissions/form-submissions.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    DrawLandingPageComponent
+    DrawLandingPageComponent,
+    FormSubmissionsComponent
   ],
   imports: [
     BrowserModule,
