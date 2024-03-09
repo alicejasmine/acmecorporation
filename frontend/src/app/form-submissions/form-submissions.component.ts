@@ -31,4 +31,31 @@ export class FormSubmissionsComponent {
     this.dataService.drawEntries = await firstValueFrom<DrawEntry[]>(this.http.get<DrawEntry[]>(
       environment.baseUrl + "/entries?page=" + this.currentPage + "&resultsPerPage=" + this.resultsPerPage));
   }
+
+
+  async NextPage() {
+    if (this.currentPage >= 1 && this.resultsPerPage >= 1) {
+      this.currentPage = this.currentPage + 1;
+      await this.router.navigate(['/entries'], {
+        queryParams: {
+          page: this.currentPage,
+        }
+      });
+      this.getEntries();
+    }
+  }
+
+
+  async PreviousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage = this.currentPage - 1;
+      await this.router.navigate(['entries'], {
+        queryParams: {
+          page: this.currentPage,
+        }
+      });
+      this.getEntries();
+    }
+  }
 }
+
