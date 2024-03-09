@@ -10,6 +10,8 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
     templateUrl: 'draw-landing-page.component.html'
 })
 export class DrawLandingPageComponent {
+    showForm = true;
+
     firstName = new FormControl('', [Validators.required, Validators.maxLength(50)]);
     lastName = new FormControl('', [Validators.required, Validators.maxLength(50)]);
     emailAddress = new FormControl('', [Validators.required, Validators.email]);
@@ -36,7 +38,8 @@ export class DrawLandingPageComponent {
             const call = this.http.post<DrawEntry>('http://localhost:5000/api/entry/', this.entryFormGroup.value);
             const result = await firstValueFrom<DrawEntry>(call);
             this.dataService.drawEntries.push(result);
-
+            this.showForm = false;
+            
         } catch (error: any) {
             console.log(error);
             let errorMessage = 'Error';
