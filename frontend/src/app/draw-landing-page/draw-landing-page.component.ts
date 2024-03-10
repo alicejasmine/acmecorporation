@@ -26,6 +26,7 @@ export class DrawLandingPageComponent {
         isOver18Confirmed: this.isOver18Confirmed
     });
 
+  errorMessage:string='';
 
     constructor(public dataService: DataService,
                 public http: HttpClient) {
@@ -39,21 +40,23 @@ export class DrawLandingPageComponent {
             const result = await firstValueFrom<DrawEntry>(call);
             this.dataService.drawEntries.push(result);
             this.showForm = false;
-            
-        } catch (error: any) {
-            console.log(error);
-            let errorMessage = 'Error';
 
-            if (error instanceof HttpErrorResponse) {
-                //The backend returned an unsuccessful response code.
-                errorMessage = error.error?.message || 'Server error';
+        } catch (error: any) {
+          console.log(error);
+          this.errorMessage = 'Error';
+
+          if (error instanceof HttpErrorResponse) {
+            //The backend returned an unsuccessful response code.
+            this.errorMessage = error.error?.messageToClient || 'Server error';
+            console.log('Full error response:', error);
+
             } else if (error.error instanceof ErrorEvent) {
-                //A client-side or network error occurred.
-                errorMessage = error.error.message;
+              //A client-side or network error occurred.
+              this.errorMessage = error.error.message;
             }
 
+          }
+
         }
-
-
     }
-}
+
