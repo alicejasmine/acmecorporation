@@ -77,4 +77,15 @@ OFFSET @offset ROWS FETCH NEXT @limit ROWS ONLY;
             return conn.Query<DrawEntry>(sql, new { offset = (page - 1) * resultsPerPage, limit = resultsPerPage });
         }
     }
+
+
+    public int GetTotalCount()
+    {
+        string sqlForTotalCount = @"SELECT COUNT(*) FROM dbo.DrawEntries";
+
+        using (var conn = new SqlConnection(_connectionString))
+        {
+            return conn.QuerySingle<int>(sqlForTotalCount);
+        }
+    }
 }

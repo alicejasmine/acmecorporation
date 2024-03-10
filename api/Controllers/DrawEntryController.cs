@@ -36,4 +36,12 @@ public class DrawEntryController : ControllerBase
     {
         return _drawEntryService.GetEntries(page, resultsPerPage);
     }
+    
+    //get total count of entries in the database
+    [HttpGet]
+    [Route("api/entries/total-count")]
+    public async Task<int> GetTotalCount()
+    {
+        return await _drawEntryService.GetTotalCount();
+    }
 }

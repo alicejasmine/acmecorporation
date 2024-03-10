@@ -70,6 +70,10 @@ public class DrawEntryService
     {
         return _drawEntryRepository.GetEntries(page, resultsPerPage);
     }
-    
-    
+
+
+    public async Task<int> GetTotalCount()
+    {
+        return _drawEntryRepository.GetTotalCount();
+    }
 }
