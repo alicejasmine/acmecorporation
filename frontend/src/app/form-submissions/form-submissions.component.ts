@@ -14,7 +14,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class FormSubmissionsComponent {
   resultsPerPage: number = 10;
   currentPage: number = 1;
-
+  totalEntries: number = 0
 
   constructor(public dataService: DataService,
               public http: HttpClient, public route: ActivatedRoute,
@@ -30,11 +30,15 @@ export class FormSubmissionsComponent {
     this.resultsPerPage = Number.parseInt(resultsPerPage) ?? 10;
     this.dataService.drawEntries = await firstValueFrom<DrawEntry[]>(this.http.get<DrawEntry[]>(
       environment.baseUrl + "/entries?page=" + this.currentPage + "&resultsPerPage=" + this.resultsPerPage));
+    this.totalEntries = await firstValueFrom(this.http.get<number>(environment.baseUrl + "/entries/total-count"));
+
   }
 
 
   async NextPage() {
-    if (this.currentPage >= 1 && this.resultsPerPage >= 1) {
+    const maxPage = this.totalEntries / this.resultsPerPage;
+
+    if (this.currentPage >= 1 && this.currentPage < maxPage) {
       this.currentPage = this.currentPage + 1;
       await this.router.navigate(['/entries'], {
         queryParams: {
