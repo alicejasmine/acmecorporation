@@ -10,7 +10,7 @@ namespace tests;
 
 public class CreateEntryUnitTests
 {
-    [TestCase("Andrea", "Clay", "andreac@gmail.com", "XHMXCLGXBFSUU959WLLW", true)]
+    [TestCase("Andrea", "Clay", "andreac@gmail.com", "968XZBC5GDXP19P7KA7Z", true)]
     public async Task EntryCanSuccessfullyBeCreatedFromHttpRequest(string firstname, string lastname,
         string emailAddress, string serialNumber, bool isAgeConfirmed)
     {
@@ -41,12 +41,12 @@ public class CreateEntryUnitTests
 
 
     [TestCase("Firstname that is long and exceeds the set character limit", "Clay", "andreac@gmail.com",
-        "XHMXCLGXBFSUU959WLLW", true)] //firstname exceeds character limit
+        "968XZBC5GDXP19P7KA7Z", true)] //firstname exceeds character limit
     [TestCase("Andrea", "Lastname that is long and exceeds the set character limit", "andreac@gmail.com",
-        "XHMXCLGXBFSUU959WLLW", true)] //lastname exceeds character limit
+        "968XZBC5GDXP19P7KA7Z", true)] //lastname exceeds character limit
     [TestCase("Andrea", "Clay", "andreac@gmail.com", "invalidSerialNumber", true)] //serial number invalid
-    [TestCase("Andrea", "Clay", "notemailformat", "XHMXCLGXBFSUU959WLLW", true)] //Email format not valid
-    [TestCase("Andrea", "Clay", "andreac@gmail.com", "XHMXCLGXBFSUU959WLLW", false)] //Age confirmation false
+    [TestCase("Andrea", "Clay", "notemailformat", "968XZBC5GDXP19P7KA7Z", true)] //Email format not valid
+    [TestCase("Andrea", "Clay", "andreac@gmail.com", "968XZBC5GDXP19P7KA7Z", false)] //Age confirmation false
     public async Task ServerSideDataValidationShouldRejectEntry(string firstname, string lastname,
         string emailAddress, string serialNumber, bool isAgeConfirmed)
     {
@@ -76,7 +76,7 @@ public class CreateEntryUnitTests
     }
 
 
-    [TestCase("Andrea", "Clay", "andreac@gmail.com", "XHMXCLGXBFSUU959WLLW", true)]
+    [TestCase("Andrea", "Clay", "andreac@gmail.com", "968XZBC5GDXP19P7KA7Z", true)]
     public async Task ServerSideDataValidationShouldRejectEntryLimit(string firstname, string lastname,
         string emailAddress, string serialNumber, bool isAgeConfirmed)
     {
@@ -116,5 +116,6 @@ public class CreateEntryUnitTests
             conn.ExecuteScalar<int>("SELECT COUNT(*) FROM  dbo.DrawEntries;").Should()
                 .Be(2); //3rd entry with same serial number is not inserted
         }
+        Helper.TriggerRebuild();
     }
 }
