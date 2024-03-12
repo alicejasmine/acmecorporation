@@ -16,10 +16,9 @@ The backend is structured into the following layers:
 
 The project utilizes dependency injection to manage dependencies between different components.
 
-The frontend is structured into the following components:
+The frontend is developed using Angular + Tailwind CSS. It includes data validation using FormGroup and FormControls and it is structured into the following components:
  - **draw-landing-page component:** Accessible at http://localhost:4200
  - **form-submissions component:** Accessible at http://localhost:4200/entries 
-    
 
 # Database
 
