@@ -27,25 +27,8 @@ The application uses SQL Server as the database, running in a Docker container u
 For enhanced security, the database connection string is retrieved from the "sqlconn" environment variable.  Refer to [Utilities.cs](./infrastructure/Utilities.cs) in the infrastructure folder for connection string details.
 
 ## Database tables:
-
-CREATE DATABASE AcmeDB;
-
-USE AcmeDB
-CREATE TABLE DrawEntries (
-    entry_ID INT PRIMARY KEY IDENTITY(1,1),
-    first_name NVARCHAR(50) NOT NULL,
-    last_name NVARCHAR(50) NOT NULL,
-    email_address NVARCHAR(255) NOT NULL,
-    serial_number NVARCHAR(20) NOT NULL
-);
-
-
-USE AcmeDB
-CREATE TABLE ProductSerialNumbers (
-    Id INT IDENTITY(1,1) PRIMARY KEY,
-    serial_number NVARCHAR(20) NOT NULL UNIQUE);
-
-tables are created in the default schema dbo.
+The database and table used in the application can be found in [create_database.sql](create_database.sql)
+Tables are created in the default schema dbo.
 
 ## Running SQL Server with Docker
 Here are the instructions to run SQL Server with Docker:
@@ -90,7 +73,7 @@ Here are the instructions to run SQL Server with Docker:
 # Run the Project and Tests
 
 **- backend:**
-  - Navigate to the Backend Directory:
+  - Navigate to the Api Directory:
     ```bash
     cd api
     ```
