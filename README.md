@@ -1,11 +1,11 @@
 # Acme Corporation Prize Draw
 
-## Overview
+# Overview
 
 Welcome to the Acme Corporation Prize Draw Web Application! This application allows users to enter a draw for a prize by submitting valid serial numbers from Acme Corporation's products.
 Users can enter the draw twice for each valid serial number, and they must be at least 18 years old.
 
-## Project Structure
+# Project Structure
 
 The backend is structured into the following layers:
 
@@ -21,12 +21,32 @@ The frontend is structured into the following components:
  - **form-submissions component:** Accessible at http://localhost:4200/entries 
     
 
-## Database
+# Database
 
 The application uses SQL Server as the database, running in a Docker container using this image: https://hub.docker.com/_/microsoft-mssql-server
 For enhanced security, the database connection string is retrieved from the "sqlconn" environment variable.  Refer to [Utilities.cs](./infrastructure/Utilities.cs) in the infrastructure folder for connection string details.
 
-# Running SQL Server with Docker
+## Database tables:
+
+CREATE DATABASE AcmeDB;
+
+USE AcmeDB
+CREATE TABLE DrawEntries (
+    entry_ID INT PRIMARY KEY IDENTITY(1,1),
+    first_name NVARCHAR(50) NOT NULL,
+    last_name NVARCHAR(50) NOT NULL,
+    email_address NVARCHAR(255) NOT NULL,
+    serial_number NVARCHAR(20) NOT NULL
+);
+
+
+USE AcmeDB
+CREATE TABLE ProductSerialNumbers (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    serial_number NVARCHAR(20) NOT NULL UNIQUE);
+
+
+## Running SQL Server with Docker
 Here are the instructions to run SQL Server with Docker:
 
 1. **Download Docker and Create a Docker Hub Account:**
@@ -66,5 +86,16 @@ Here are the instructions to run SQL Server with Docker:
 8. **Access SQL Server:**
    - SQL Server should now be running in the Docker container. Connect to it using the specified port (default is 1433) and configured credentials.
 
+# Run the project/tests
+   - backend:
+    cd api
+    dotnet run
 
+   - frontend:
+     cd frontend
+     ng serve
+ Access http://localhost:4200 and http://localhost:4200/entries
+
+     - tests:
+       dotnet test
 
