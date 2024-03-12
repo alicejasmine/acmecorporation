@@ -89,12 +89,12 @@ Here are the instructions to run SQL Server with Docker:
 
 # Run the project/tests
    - backend:
-    cd api
-    dotnet run
+    - cd api
+    - dotnet run
 
    - frontend:
-     cd frontend
-     ng serve
+    - cd frontend
+    - ng serve
      
      Access http://localhost:4200 and http://localhost:4200/entries
 
