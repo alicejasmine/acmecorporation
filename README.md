@@ -87,19 +87,37 @@ Here are the instructions to run SQL Server with Docker:
 8. **Access SQL Server:**
    - SQL Server should now be running in the Docker container. Connect to it using the specified port (default is 1433) and configured credentials.
 
-# Run the project/tests
+# Run the Project and Tests
 
 **- backend:**
-  cd api
-  dotnet run
+  - Navigate to the Backend Directory:
+    ```bash
+    cd api
+    ```
+
+  - Run the .NET Application:
+    ```bash
+    dotnet run
+    ```
 
 **- frontend:**
-  cd frontend
-  ng serve
+  - Navigate to the Frontend Directory:
+    ```bash
+    cd frontend
+    ```
 
-**Access:**
-  http://localhost:4200 and http://localhost:4200/entries
+  - Run the Angular Application:
+    ```bash
+    ng serve
+    ```
+
+  - Access:
+    - [http://localhost:4200](http://localhost:4200)
+    - [http://localhost:4200/entries](http://localhost:4200/entries)
 
 **- tests (backend):**
-  dotnet test
+  - To run tests for the backend, execute the following command:
+    ```bash
+    dotnet test
+    ```
 
