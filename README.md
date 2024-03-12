@@ -26,14 +26,45 @@ The frontend is structured into the following components:
 The application uses SQL Server as the database, running in a Docker container using this image: https://hub.docker.com/_/microsoft-mssql-server
 For enhanced security, the database connection string is retrieved from the "sqlconn" environment variable.  Refer to [Utilities.cs](./infrastructure/Utilities.cs) in the infrastructure folder for connection string details.
 
+# Running SQL Server with Docker
 Here are the instructions to run SQL Server with Docker:
-- Download Docker, set up an account on Docker Hub.
-- Find image on Docker hub: https://hub.docker.com/_/microsoft-mssql-server
-- In the How to use this image section, copy this command for SQL Server 2022: (You can change the password before running the command)
-docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=yourStrong(!)Password" -e "MSSQL_PID=Evaluation" -p 1433:1433  --name sqlpreview --hostname sqlpreview -d mcr.microsoft.com/mssql/server:2022-preview-ubuntu-22.04
-- Open a terminal/cmd line
-- login into docker using docker login
-- run command from above with changed password and a name for the container to download the image.
+
+1. **Download Docker and Create a Docker Hub Account:**
+   - https://www.docker.com/get-started
+   - https://hub.docker.com
+     
+2. **Find the SQL Server Image:**
+   - Visit the official Microsoft SQL Server image page on Docker Hub: [microsoft-mssql-server](https://hub.docker.com/_/microsoft-mssql-server).
+
+3. **Copy the Docker Run Command:**
+   - In the "How to use this image" section, copy the command for SQL Server 2022. Customize the password before running the command.
+   
+     ```bash
+     docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=yourStrong(!)Password" -e "MSSQL_PID=Evaluation" -p 1433:1433 --name sqlpreview --hostname sqlpreview -d mcr.microsoft.com/mssql/server:2022-preview-ubuntu-22.04
+     ```
+
+4. **Open Terminal/Command Line:**
+   - Open a terminal or command line on your machine.
+
+5. **Login to Docker:**
+   - Run the following command to log in to Docker using your Docker Hub credentials:
+
+     ```bash
+     docker login
+     ```
+
+6. **Run Docker Command:**
+   - Execute the copied Docker run command, replacing the password and container name as needed. This command will download the SQL Server 2022 image and start the container.
+
+     ```bash
+     docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=yourNewPassword" -e "MSSQL_PID=Evaluation" -p 1433:1433 --name yourContainerName -d mcr.microsoft.com/mssql/server:2022-preview-ubuntu-22.04
+     ```
+
+   - Replace `yourNewPassword` with your desired strong password.
+   - Replace `yourContainerName` with a preferred name for your SQL Server container.
+
+8. **Access SQL Server:**
+   - SQL Server should now be running in the Docker container. Connect to it using the specified port (default is 1433) and configured credentials.
 
 
 
