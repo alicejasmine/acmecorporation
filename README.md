@@ -12,7 +12,7 @@ The backend is structured into the following layers:
 - **API Layer:** Handles HTTP requests, interacting with the frontend and includes data validation with transfer model. 
 - **Service Layer:** Implements business logic related to draw entry management, including validation and data retrieval.
 - **Infrastructure Layer:** Manages infrastructure concerns such as database connections and database access layer.
--  **Tests:** Includes unit tests for entry creation with test cases: success, fail due to data validation and fail due to maximum 2 entries per serial number limit. 
+-  **Tests:** Includes unit tests for entry creation with test cases: success, fail due to data validation and fail due to max 2 entries per serial number. 
 
 The project utilizes dependency injection to manage dependencies between different components.
 
@@ -88,16 +88,18 @@ Here are the instructions to run SQL Server with Docker:
    - SQL Server should now be running in the Docker container. Connect to it using the specified port (default is 1433) and configured credentials.
 
 # Run the project/tests
-   - backend:
-    - cd api
-    - dotnet run
 
-   - frontend:
-    - cd frontend
-    - ng serve
-     
-     Access http://localhost:4200 and http://localhost:4200/entries
+**- backend:**
+  cd api
+  dotnet run
 
-   - tests:
-     dotnet test
+**- frontend:**
+  cd frontend
+  ng serve
+
+**Access:**
+  http://localhost:4200 and http://localhost:4200/entries
+
+**- tests (backend):**
+  dotnet test
 
