@@ -45,6 +45,7 @@ CREATE TABLE ProductSerialNumbers (
     Id INT IDENTITY(1,1) PRIMARY KEY,
     serial_number NVARCHAR(20) NOT NULL UNIQUE);
 
+tables are created in the default schema dbo.
 
 ## Running SQL Server with Docker
 Here are the instructions to run SQL Server with Docker:
@@ -94,8 +95,9 @@ Here are the instructions to run SQL Server with Docker:
    - frontend:
      cd frontend
      ng serve
- Access http://localhost:4200 and http://localhost:4200/entries
+     
+     Access http://localhost:4200 and http://localhost:4200/entries
 
-     - tests:
-       dotnet test
+   - tests:
+     dotnet test
 
