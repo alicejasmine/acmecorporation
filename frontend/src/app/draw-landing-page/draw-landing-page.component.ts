@@ -7,7 +7,8 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 
 @Component({
     selector: 'app-draw-landing-page',
-    templateUrl: 'draw-landing-page.component.html'
+    templateUrl: 'draw-landing-page.component.html',
+  styleUrls: ['./draw-landing-page.component.css']
 })
 export class DrawLandingPageComponent {
     showForm = true;

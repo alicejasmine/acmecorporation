@@ -1,0 +1,19 @@
+.background-radial-gradient {
+  background-image: radial-gradient(1000px circle at 0% 0%,
+  hsl(218, 41%, 37%) 15%,
+  hsl(218, 41%, 31%) 35%,
+  hsl(218, 41%, 21%) 75%,
+  hsl(218, 41%, 20%) 80%,
+  transparent 100%),
+  radial-gradient(1500px circle at 100% 100%,
+    hsl(218, 41%, 45%) 15%,
+    hsl(218, 41%, 30%) 35%,
+    hsl(218, 41%, 20%) 75%,
+    hsl(218, 41%, 19%) 80%,
+    transparent 100%);
+}
+
+
+.menu-item{
+ @apply block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent
+}
